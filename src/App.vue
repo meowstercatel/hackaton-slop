@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 // @ts-ignore Root JS file has no TypeScript declaration.
 import { readExcelFile, getTimeValues } from '../index.js'
 
@@ -8,8 +8,8 @@ const error = ref<string | null>(null)
 const loading = ref(true)
 const selectedValue = ref()
 
-const hoveredRow = ref(null)
-const hoveredCol = ref(null)
+const hoveredRow = ref<number | null>(null)
+const hoveredCol = ref<number | null>(null)
 
 onMounted(async () => {
   try {
@@ -23,12 +23,25 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main style="display: flex; flex-direction: column; justify-items: center; text-align: center">
+  <main
+    style="
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-items: center;
+      text-align: center;
+      background-color: #fcfaf8;
+    "
+  >
     <p v-if="loading">Loading teachers...</p>
     <p v-else-if="error">{{ error }}</p>
     <section v-else>
-      <select v-model="selectedValue" id="item-select">
-        <option disabled value="">Please select one</option>
+      <select
+        v-model="selectedValue"
+        id="item-select"
+        style="padding: 8px; border: 2px solid #111111; border-radius: 4px; font-family: inherit"
+      >
+        <option disabled value="">Wybierz nauczyciela</option>
         <option v-for="(val, key) in data" :key="key" :value="val">
           {{ key }}
         </option>
@@ -45,7 +58,7 @@ onMounted(async () => {
             style="
               width: 100%;
               border-collapse: collapse;
-              border: 2px solid #000;
+              border: 2px solid #111111;
               table-layout: fixed;
             "
           >
@@ -54,10 +67,10 @@ onMounted(async () => {
                 <th
                   style="
                     width: 12%;
-                    background-color: #333;
-                    color: #fff;
+                    background-color: #111111;
+                    color: #dccca1;
                     padding: 12px 5px;
-                    border: 1px solid #444;
+                    border: 1px solid #46302a;
                     text-transform: uppercase;
                     font-weight: 800;
                     font-size: 0.9rem;
@@ -69,14 +82,18 @@ onMounted(async () => {
                   v-for="(day, index) in ['Pn', 'Wt', 'Śr', 'Czw', 'Pt']"
                   :key="day"
                   :style="{
-                    backgroundColor: ['#FF5733', '#33FF57', '#3357FF', '#F333FF', '#FFBD33'][index],
+                    /* Highlight using 'Baked', otherwise use Wines, Grass, Berry, Coral, Chive */
+                    backgroundColor:
+                      hoveredCol === index
+                        ? '#d68067'
+                        : ['#703d41', '#264d39', '#2a2858', '#145c62', '#555f47'][index],
+                    color: '#ffffff',
                     width: '17.6%',
                     padding: '12px 5px',
-                    border: '1px solid #444',
+                    border: '1px solid #111111',
                     textTransform: 'uppercase',
                     fontWeight: '800',
                     fontSize: '0.9rem',
-                    color: '#fff',
                   }"
                 >
                   {{ day }}
@@ -86,15 +103,16 @@ onMounted(async () => {
             <tbody>
               <tr v-for="(time, rowIndex) in getTimeValues()" :key="rowIndex">
                 <td
-                  style="
-                    border: 1px solid #000;
-                    padding: 8px;
-                    text-align: center;
-                    background-color: #f9f9f9;
-                    font-weight: 700;
-                    font-size: 0.8rem;
-                    color: #333;
-                  "
+                  :style="{
+                    border: '1px solid #111111',
+                    padding: '8px',
+                    textAlign: 'center',
+                    /* Highlight using 'Baked', otherwise use 'Royal' */
+                    backgroundColor: hoveredRow === rowIndex ? '#d68067' : '#0e2d31',
+                    fontWeight: '700',
+                    fontSize: '0.8rem',
+                    color: '#dccca1',
+                  }"
                 >
                   {{ time }}
                 </td>
@@ -103,23 +121,28 @@ onMounted(async () => {
                   v-for="(column, colIndex) in value"
                   :key="colIndex"
                   style="
-                    border: 1px solid #000;
+                    border: 1px solid #111111;
                     padding: 6px;
                     vertical-align: middle;
-                    background-color: #fff;
+                    /* Using 'Plush' for the cell background */
+                    background-color: #a2c9cb;
                   "
                 >
                   <div
                     v-if="column[rowIndex]"
+                    @mouseenter="((hoveredRow = rowIndex), (hoveredCol = colIndex))"
+                    @mouseleave="((hoveredRow = null), (hoveredCol = null))"
                     style="
                       padding: 6px 10px;
-                      background-color: #fff;
-                      border: 2px solid #000;
-                      border-left: 6px solid #002;
-                      color: #000;
+                      /* Using 'Lotus' for lesson card and 'Candy' for accent */
+                      background-color: #e0c1bf;
+                      border: 2px solid #111111;
+                      border-left: 6px solid #de2136;
+                      color: #111111;
                       font-weight: 600;
                       font-size: 0.85rem;
                       min-height: 18px;
+                      cursor: pointer;
                     "
                   >
                     {{ column[rowIndex] }}
@@ -134,30 +157,25 @@ onMounted(async () => {
           <div
             style="
               padding: 12px;
-              border: 2px solid #000;
-              background-color: #f0f0f0;
+              border: 2px solid #111111;
+              /* Using 'Foamy' for info sections */
+              background-color: #729a89;
               margin-top: -2px;
             "
           >
             <strong
               style="
-                color: #000;
+                color: #111111;
                 text-transform: uppercase;
                 font-size: 0.8rem;
                 letter-spacing: 0.5px;
               "
               >{{ key }}:</strong
             >
-            <span style="margin-left: 10px; color: #000; font-weight: 500">{{ value }}</span>
+            <span style="margin-left: 10px; color: #111111; font-weight: 700">{{ value }}</span>
           </div>
         </template>
       </div>
     </section>
   </main>
 </template>
-
-<style scoped>
-main {
-  padding: 1rem;
-}
-</style>

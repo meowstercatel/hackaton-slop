@@ -17,18 +17,33 @@ export function getTimeValues() {
 
 export async function getTeacherLessons(teacherName) {
     const week = teacherTable[teacherName];
-    console.log(week);
+    if (teacherName.includes("Twarowska"))
+        console.log(week);
 
     const actualLessons = [[], [], [], [], []];
-    for (let i = 0; i < week.length - 1; i++) {
+    for (let i = 0; i < actualLessons.length; i++) {
+        actualLessons[i] = new Array(week[i].length).fill(null);
+    }
+    for (let i = 0; i < week.length; i++) {
         const day = week[i];
         for (let j = 0; j < day.length; j++) {
             const cell = day[j];
             if (typeof cell == 'undefined' || cell === null) continue;
-            const klasa = cell.split("/")[0].split(" ")[0].trim();
-            console.log(klasa);
+            const klasa = cell.split("/")[0].split(" ")[0].trim().replace(/\d$/, "");
+            const klasaIndex = worksheet.getRow(60).values.findIndex(val => val && val.trim() === klasa);
+
+
+            try {
+                const columnValues = worksheet.getColumn(klasaIndex).values;
+
+                const lesson = columnValues[2 + j + i * 11];
+                actualLessons[i][j] = lesson.split(" ")[0].trim();
+            } catch (e) {
+                actualLessons[i][j] = null;
+            }
         }
     }
+    return actualLessons;
 }
 
 
@@ -117,7 +132,7 @@ export async function readExcelFile() {
                 data[imie].lekcje = week.slice(0, week.length - 1);
             else {
                 data[imie] = {
-                    wychowawca: "",
+                    wychowawca: "brak",
                     lekcje: week.slice(0, week.length - 1)
                 }
             }
@@ -128,13 +143,14 @@ export async function readExcelFile() {
             sortedData[key] = data[key];
         });
 
-        console.log(Object.keys(sortedData)[0])
-        getTeacherLessons(Object.keys(sortedData)[0]);
-
+        for (let i = 0; i < Object.keys(sortedData).length; i++) {
+            sortedData[Object.keys(sortedData)[i]].actualLessons = await getTeacherLessons(Object.keys(sortedData)[i]);
+        }
 
     } catch (error) {
         throw new Error(`Error reading the Excel file: ${error.message}`);
     }
+    console.log(sortedData);
     return sortedData;
 }
 

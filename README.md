@@ -27,4 +27,6 @@ npm install
 npm run dev
 ```
 
+wejdź na stronę `http://localhost:5173/`
+
 ### plik .xlsx jest w / projektu z nazwą `Plan_do_druku_2025_2026 od 23.02.xlsx`

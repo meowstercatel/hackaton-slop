@@ -8,6 +8,7 @@ const error = ref<string | null>(null)
 const loading = ref(true)
 const selectedValue = ref()
 
+// Used to track the current hover position
 const hoveredRow = ref<number | null>(null)
 const hoveredCol = ref<number | null>(null)
 
@@ -30,17 +31,12 @@ onMounted(async () => {
       flex-direction: column;
       justify-items: center;
       text-align: center;
-      background-color: #fcfaf8;
     "
   >
     <p v-if="loading">Loading teachers...</p>
     <p v-else-if="error">{{ error }}</p>
     <section v-else>
-      <select
-        v-model="selectedValue"
-        id="item-select"
-        style="padding: 8px; border: 2px solid #111111; border-radius: 4px; font-family: inherit"
-      >
+      <select v-model="selectedValue" id="item-select">
         <option disabled value="">Wybierz nauczyciela</option>
         <option v-for="(val, key) in data" :key="key" :value="val">
           {{ key }}
@@ -58,7 +54,7 @@ onMounted(async () => {
             style="
               width: 100%;
               border-collapse: collapse;
-              border: 2px solid #111111;
+              border: 2px solid #000;
               table-layout: fixed;
             "
           >
@@ -67,10 +63,10 @@ onMounted(async () => {
                 <th
                   style="
                     width: 12%;
-                    background-color: #111111;
-                    color: #dccca1;
+                    background-color: #333;
+                    color: #fff;
                     padding: 12px 5px;
-                    border: 1px solid #46302a;
+                    border: 1px solid #444;
                     text-transform: uppercase;
                     font-weight: 800;
                     font-size: 0.9rem;
@@ -82,15 +78,16 @@ onMounted(async () => {
                   v-for="(day, index) in ['Pn', 'Wt', 'Śr', 'Czw', 'Pt']"
                   :key="day"
                   :style="{
-                    /* Highlight using 'Baked', otherwise use Wines, Grass, Berry, Coral, Chive */
+                    /* Highlight background if this column is hovered */
                     backgroundColor:
                       hoveredCol === index
-                        ? '#d68067'
-                        : ['#703d41', '#264d39', '#2a2858', '#145c62', '#555f47'][index],
-                    color: '#ffffff',
+                        ? '#dccca1'
+                        : ['#FF5733', '#33FF57', '#3357FF', '#F333FF', '#FFBD33'][index],
+                    /* Change text color to black when highlighted for contrast */
+                    color: hoveredCol === index ? '#000' : '#fff',
                     width: '17.6%',
                     padding: '12px 5px',
-                    border: '1px solid #111111',
+                    border: '1px solid #444',
                     textTransform: 'uppercase',
                     fontWeight: '800',
                     fontSize: '0.9rem',
@@ -104,14 +101,14 @@ onMounted(async () => {
               <tr v-for="(time, rowIndex) in getTimeValues()" :key="rowIndex">
                 <td
                   :style="{
-                    border: '1px solid #111111',
+                    border: '1px solid #000',
                     padding: '8px',
                     textAlign: 'center',
-                    /* Highlight using 'Baked', otherwise use 'Royal' */
-                    backgroundColor: hoveredRow === rowIndex ? '#d68067' : '#0e2d31',
+                    /* Highlight background if this row is hovered */
+                    backgroundColor: hoveredRow === rowIndex ? '#dccca1' : '#f9f9f9',
                     fontWeight: '700',
                     fontSize: '0.8rem',
-                    color: '#dccca1',
+                    color: '#333',
                   }"
                 >
                   {{ time }}
@@ -121,11 +118,10 @@ onMounted(async () => {
                   v-for="(column, colIndex) in value"
                   :key="colIndex"
                   style="
-                    border: 1px solid #111111;
+                    border: 1px solid #000;
                     padding: 6px;
                     vertical-align: middle;
-                    /* Using 'Plush' for the cell background */
-                    background-color: #a2c9cb;
+                    background-color: #fff;
                   "
                 >
                   <div
@@ -134,11 +130,10 @@ onMounted(async () => {
                     @mouseleave="((hoveredRow = null), (hoveredCol = null))"
                     style="
                       padding: 6px 10px;
-                      /* Using 'Lotus' for lesson card and 'Candy' for accent */
-                      background-color: #e0c1bf;
-                      border: 2px solid #111111;
-                      border-left: 6px solid #de2136;
-                      color: #111111;
+                      background-color: #fff;
+                      border: 2px solid #000;
+                      border-left: 6px solid #002;
+                      color: #000;
                       font-weight: 600;
                       font-size: 0.85rem;
                       min-height: 18px;
@@ -157,25 +152,28 @@ onMounted(async () => {
           <div
             style="
               padding: 12px;
-              border: 2px solid #111111;
-              /* Using 'Foamy' for info sections */
-              background-color: #729a89;
+              border: 2px solid #000;
+              background-color: #f0f0f0;
               margin-top: -2px;
             "
           >
             <strong
               style="
-                color: #111111;
+                color: #000;
                 text-transform: uppercase;
                 font-size: 0.8rem;
                 letter-spacing: 0.5px;
               "
               >{{ key }}:</strong
             >
-            <span style="margin-left: 10px; color: #111111; font-weight: 700">{{ value }}</span>
+            <span style="margin-left: 10px; color: #000; font-weight: 500">{{ value }}</span>
           </div>
         </template>
       </div>
     </section>
   </main>
 </template>
+
+<style scoped>
+/* Keeping only the root padding as per your original file */
+</style>

@@ -17,8 +17,6 @@ export function getTimeValues() {
 
 export async function getTeacherLessons(teacherName) {
     const week = teacherTable[teacherName];
-    if (teacherName.includes("Twarowska"))
-        console.log(week);
 
     const actualLessons = [[], [], [], [], []];
     for (let i = 0; i < actualLessons.length; i++) {

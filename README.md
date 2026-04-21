@@ -1,4 +1,4 @@
-# Hackaton SLOP - Szkolny Plan Lekcji
+# Szkolny Plan Lekcji
 
 Aplikacja oparta o framework **Vue 3**, **Vite** oraz **TypeScript**, służąca do parsowania i wyświetlania planu zajęć dla nauczycieli bezpośrednio z pliku Excel. Do odczytu arkusza wykorzystywana jest biblioteka `exceljs`.
 
@@ -27,4 +27,4 @@ npm install
 npm run dev
 ```
 
-plik .xlsx jest w / projektu z nazwą `Plan_do_druku_2025_2026 od 23.02.xlsx`
+### plik .xlsx jest w / projektu z nazwą `Plan_do_druku_2025_2026 od 23.02.xlsx`

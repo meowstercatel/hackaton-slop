@@ -9,6 +9,7 @@ const teacherTable = {
 }
 
 let worksheet;
+let beginNameIndex = -1;
 
 export function getTimeValues() {
     const column = worksheet.getColumn(1);
@@ -63,6 +64,15 @@ export async function readExcelFile() {
         const teachers58 = [];
         const teachers59 = [];
         const teachers60 = [];
+
+        worksheet.eachRow((row, rowNumber) => {
+            const rowData = Array.isArray(row.values) ? row.values.slice(1) : row.values;
+            const index = rowData.findIndex(val => val == 'wychowawca');
+            if (index !== -1) {
+                beginNameIndex = rowData.findIndex(val => val == 'wychowawca') + 1;
+                console.log("INDEX: ", rowNumber);
+            }
+        });
 
         const row60 = []; const row61 = [];
         worksheet.eachRow((row, rowNumber) => {

@@ -128,17 +128,22 @@ onMounted(async () => {
                     v-if="column[rowIndex]"
                     @mouseenter="((hoveredRow = rowIndex), (hoveredCol = colIndex))"
                     @mouseleave="((hoveredRow = null), (hoveredCol = null))"
-                    style="
-                      padding: 6px 10px;
-                      background-color: #fff;
-                      border: 2px solid #000;
-                      border-left: 6px solid #002;
-                      color: #000;
-                      font-weight: 600;
-                      font-size: 0.85rem;
-                      min-height: 18px;
-                      cursor: pointer;
-                    "
+                    :style="{
+                      padding: '6px 10px',
+                      backgroundColor:
+                        hoveredRow === rowIndex && hoveredCol === colIndex ? '#e0e0e0' : '#fff',
+                      border:
+                        hoveredRow === rowIndex && hoveredCol === colIndex
+                          ? '4px solid #000'
+                          : '2px solid #000',
+                      borderLeft: '6px solid #002',
+                      color: '#000',
+                      fontWeight: '600',
+                      fontSize: '0.85rem',
+                      minHeight: '18px',
+                      cursor: 'pointer',
+                      transition: 'all 0.1s ease-in-out',
+                    }"
                   >
                     {{ column[rowIndex] }}
                   </div>

@@ -1,41 +1,33 @@
-# scrape
+# Hackaton SLOP - Szkolny Plan Lekcji
 
-This template should help get you started developing with Vue 3 in Vite.
+Aplikacja oparta o framework **Vue 3**, **Vite** oraz **TypeScript**, służąca do parsowania i wyświetlania planu zajęć dla nauczycieli bezpośrednio z pliku Excel. Do odczytu arkusza wykorzystywana jest biblioteka `exceljs`.
 
-## Recommended IDE Setup
+## Funkcjonalności
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- Odczytywanie i parsowanie pliku `public/Plan.xlsx`.
+- Automatyczne wyodrębnianie i kategoryzacja godzin oraz dni tygodnia z planu za pomocą funkcji iteracyjnych.
+- Generowanie przejrzystej i interaktywnej tabeli dla pożądanego nauczyciela.
+- Podświetlanie rzędów (godziny) i kolumn (dni tygodnia) po najechaniu kursorem dla łatwiejszej orientacji w tabeli.
 
-## Recommended Browser Setup
+## Wymagania
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+- Node.js (wersja przynajmniej zgodna z Vite i Vue).
 
-## Type Support for `.vue` Imports in TS
+## Uruchomienie projektu
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+1. Zainstaluj wszystkie wymagane pakiety:
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+2. Uruchom aplikację w trybie deweloperskim z przeładowaniem na żywo:
 
 ```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+3. Wersja na serwer produkcyjny (zbuduj projekt):
 
 ```sh
 npm run build

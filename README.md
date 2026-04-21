@@ -4,7 +4,7 @@ Aplikacja oparta o framework **Vue 3**, **Vite** oraz **TypeScript**, służąca
 
 ## Funkcjonalności
 
-- Odczytywanie i parsowanie pliku `public/Plan.xlsx`.
+- Odczytywanie i parsowanie planu lekcji w formacie `.xlsx`.
 - Automatyczne wyodrębnianie i kategoryzacja godzin oraz dni tygodnia z planu za pomocą funkcji iteracyjnych.
 - Generowanie przejrzystej i interaktywnej tabeli dla pożądanego nauczyciela.
 - Podświetlanie rzędów (godziny) i kolumn (dni tygodnia) po najechaniu kursorem dla łatwiejszej orientacji w tabeli.
@@ -21,14 +21,10 @@ Aplikacja oparta o framework **Vue 3**, **Vite** oraz **TypeScript**, służąca
 npm install
 ```
 
-2. Uruchom aplikację w trybie deweloperskim z przeładowaniem na żywo:
+2. Uruchom aplikację
 
 ```sh
 npm run dev
 ```
 
-3. Wersja na serwer produkcyjny (zbuduj projekt):
-
-```sh
-npm run build
-```
+plik .xlsx jest w / projektu z nazwą `Plan_do_druku_2025_2026 od 23.02.xlsx`

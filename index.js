@@ -46,15 +46,9 @@ export async function getTeacherLessons(teacherName) {
 }
 
 
-export async function readExcelFile() {
+export async function readExcelFile(file) {
     const workbook = new ExcelJS.Workbook();
-    const response = await fetch('/Plan.xlsx');
-
-    if (!response.ok) {
-        throw new Error(`Cannot load /Plan.xlsx: ${response.status} ${response.statusText}`);
-    }
-
-    const fileBuffer = await response.arrayBuffer();
+    const fileBuffer = await file.arrayBuffer();
 
     try {
         await workbook.xlsx.load(fileBuffer);
@@ -64,15 +58,6 @@ export async function readExcelFile() {
         const teachers58 = [];
         const teachers59 = [];
         const teachers60 = [];
-
-        worksheet.eachRow((row, rowNumber) => {
-            const rowData = Array.isArray(row.values) ? row.values.slice(1) : row.values;
-            const index = rowData.findIndex(val => val == 'wychowawca');
-            if (index !== -1) {
-                beginNameIndex = rowData.findIndex(val => val == 'wychowawca') + 1;
-                console.log("INDEX: ", rowNumber);
-            }
-        });
 
         const row60 = []; const row61 = [];
         worksheet.eachRow((row, rowNumber) => {
